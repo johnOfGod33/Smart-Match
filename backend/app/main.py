@@ -1,10 +1,9 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from .database import init_db
-from .job_seekers.models import Job_seeker
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):  # noqa
+async def lifespan(app: FastAPI):
     await init_db()
     yield
 
