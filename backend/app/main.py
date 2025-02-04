@@ -1,14 +1,18 @@
-from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from .database import init_db
-from .job_seekers import routes as job_seekers_routes
+
+from fastapi import FastAPI
+
 from .auth import routes as auth_routes
+from .database import init_db
 from .job_offers import routes as job_offers_routes
+from .job_seekers import routes as job_seekers_routes
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await init_db()
     yield
+
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(job_seekers_routes.router)

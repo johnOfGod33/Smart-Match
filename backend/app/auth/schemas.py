@@ -1,7 +1,6 @@
-from typing import List
-from pydantic import BaseModel,EmailStr
-from beanie import Link, Indexed
+from pydantic import BaseModel
+
 
 class Token(BaseModel):
-  access_token: str
-  token_type: str
+    access_token: str
+    token_type: str
