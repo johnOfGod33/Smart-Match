@@ -1,14 +1,10 @@
 from typing import List
 
+from .schemas import JobSeekerIn
 from ..schemas import Job_offer_type
-from pydantic import EmailStr
 from beanie import Document
 
-class Job_seeker(Document):
-  first_name: str
-  last_name: str
-  email: EmailStr
-  password: str
+class Job_seeker(JobSeekerIn, Document):
   domain: str
   skills: List[str]
   type_offer_seeker: Job_offer_type
