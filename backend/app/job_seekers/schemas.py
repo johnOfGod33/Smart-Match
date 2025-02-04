@@ -1,9 +1,9 @@
 from pydantic import BaseModel, EmailStr
 
-class JobSeekerBase(BaseModel):
+class Job_seeker_in(BaseModel):
+  email: EmailStr
+  password: str
+
+class Job_seeker_base(Job_seeker_in):
   first_name: str
   last_name: str
-  email: EmailStr
-
-class JobSeekerIn(JobSeekerBase):
-  password: str

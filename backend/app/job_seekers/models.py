@@ -1,10 +1,10 @@
 from typing import List
 
-from .schemas import JobSeekerIn
+from .schemas import Job_seeker_base
 from ..schemas import Job_offer_type
 from beanie import Document
 
-class Job_seeker(JobSeekerIn, Document):
+class Job_seeker(Job_seeker_base, Document):
   domain: str
   skills: List[str]
   type_offer_seeker: Job_offer_type
