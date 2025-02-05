@@ -7,6 +7,7 @@ from ..job_seekers.models import Job_seeker
 from ..utils import get_embeddings_data
 from . import utils
 from .models import Job_offer
+from .schemas import Job_offer_base
 
 router = APIRouter(
     prefix="/job_offers",
@@ -18,12 +19,29 @@ router = APIRouter(
 )
 
 
-@router.get("/", status_code=200, response_model=List[Job_offer])
-async def get_job_offers(
+@router.get("/", status_code=200)
+async def get_best_job_offers(
     job_seeker: Annotated[Job_seeker, Depends(get_current_user)],
 ):
+    """{"$match": {"domain": job_seeker.domain}},"""
+
     try:
-        job_offers = await Job_offer.find().to_list()
+        query = [
+            {
+                "$vectorSearch": {
+                    "index": "vector_index",
+                    "queryVector": job_seeker.seeker_embeddings,
+                    "path": "offer_embeddings",
+                    "numCandidates": 100,
+                    "limit": 10,
+                },
+            },
+        ]
+
+        job_offers = await Job_offer.aggregate(
+            query, projection_model=Job_offer_base
+        ).to_list()
+
         return job_offers
     except Exception as err:
         raise HTTPException(status_code=500, detail=f"somme error ocurred {err}")

@@ -1,14 +1,10 @@
 from typing import List
 
-from beanie import Document, Indexed
+from beanie import Document
 
 from ..schemas import Job_offer_type
+from .schemas import Job_offer_base
 
 
-class Job_offer(Document):
-    title: str
-    domain: str
-    skills_required: List[str]
-    type_offer: Job_offer_type
-    years_of_experience_required: int
+class Job_offer(Job_offer_base, Document):
     offer_embeddings: List[float]
