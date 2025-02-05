@@ -3,3 +3,4 @@ pyjwt
 passlib[bcrypt]
 beanie
 pydantic-settings
+sentence-transformers
