@@ -1,6 +1,6 @@
 from typing import List
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field, SecretStr
 
 from ..schemas import Job_offer_type
 

@@ -8,6 +8,7 @@ router = APIRouter(
     prefix="/job_seekers",
     tags=["Job Seekers"],
     responses={
+        201: {"description": "Job Seeker Registered"},
         401: {"description": "Unauthorized"},
         500: {"description": "Internal Server Error"},
     },
