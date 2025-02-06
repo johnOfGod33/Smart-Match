@@ -11,3 +11,7 @@ class Job_offer_base(BaseModel):
     skills_required: List[str]
     type_offer: Job_offer_type
     years_of_experience_required: int
+
+
+class Job_offer_with_score(Job_offer_base):
+    score: float | None
