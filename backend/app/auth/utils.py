@@ -42,8 +42,9 @@ async def authenticate_user(email: str, password: str):
         )
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
-    print(token)
+async def get_current_user(
+    token: str = Depends(oauth2_scheme),
+) -> Job_seeker:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -61,7 +62,9 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         if not user_id:
             raise credentials_exception
 
-        user = await Job_seeker.find_one(Job_seeker.id == PydanticObjectId(user_id))
+        user = await Job_seeker.find_one(
+            Job_seeker.id == PydanticObjectId(user_id), projection_model=Job_seeker
+        )
 
         if not user:
             print("error")
