@@ -1,10 +1,10 @@
-from typing import Annotated, Dict, List
+from typing import Annotated, List
 
 from fastapi import APIRouter, Depends, HTTPException, Response
 
 from ..auth.utils import get_current_user
-from ..job_seekers.schemas import Job_seeker_base
-from ..utils import get_embeddings_data, get_similarity_score
+from ..job_seekers.models import Job_seeker
+from ..utils import get_embeddings_data
 from . import utils
 from .models import Job_offer
 from .schemas import Job_offer_with_score
@@ -79,3 +79,16 @@ async def create_job_offer(
         return Response(status_code=201, content="Job Offer Created")
     except Exception as err:
         raise HTTPException(status_code=500, detail=f"somme error ocurred {err}")
+
+
+""" @router.update("/embedding/{job_offer_id}", status_code=200)
+async def update_embedding(job_offer_id: str, skills: List[str]):
+    try:
+        job_offer = await Job_offer.get(job_offer_id)
+        job_offer.skills_required = skills
+        await job_offer.update()
+
+        return Response(status_code=200, content="Job Offer Updated")
+    except Exception as err:
+        raise HTTPException(status_code=500, detail=f"somme error ocurred {err}")
+ """
