@@ -22,7 +22,7 @@ class Job_seeker(Job_seeker_base, Document):
                 "domain": "Finance",
                 "skills": ["python"],
                 "type_offer_seeker": "internship",
-                "year_of_experience": 3,
+                "years_of_experience": 3,
             }
         }
     }
