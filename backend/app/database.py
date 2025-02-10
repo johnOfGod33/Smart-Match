@@ -7,7 +7,7 @@ from .job_seekers.models import Job_seeker
 
 
 async def init_db() -> None:
-    client = AsyncIOMotorClient(settings.MONGO_URI)
+    client = AsyncIOMotorClient("mongodb://localhost:27017/")
 
     db = client.smart_match
 

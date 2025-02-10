@@ -1,7 +1,9 @@
 fastapi[standard]
 pyjwt
-passlib[bcrypt]
+bcrypt
 beanie
 pymongo
 pydantic-settings
 sentence-transformers
+pytest
+httpx

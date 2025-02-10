@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, Response
 
 from ..auth.utils import get_current_user
 from ..job_seekers.models import Job_seeker
+from ..job_seekers.schemas import Job_seeker_base
 from ..utils import get_embeddings_data
 from . import utils
 from .models import Job_offer
@@ -23,7 +24,7 @@ router = APIRouter(
 
 @router.get("/", status_code=200)
 async def get_best_job_offers(
-    job_seeker: Annotated[Job_seeker_base, Depends(get_current_user)],
+    job_seeker: Annotated[Job_seeker, Depends(get_current_user)],
 ):
 
     try:

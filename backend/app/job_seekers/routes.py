@@ -15,7 +15,7 @@ router = APIRouter(
 )
 
 
-@router.post("/register", status_code=201)
+@router.post("/register", status_code=201, response_model=str)
 async def register(job_seeker: Job_seeker):
     try:
         job_seeker.password = utils.hash_password(job_seeker.password)
