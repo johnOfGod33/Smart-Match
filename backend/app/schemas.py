@@ -9,3 +9,7 @@ class Job_offer_type(str, Enum):
     part_time = "part_time"
     freelance = "freelance"
     volunteer = "volunteer"
+
+
+class Message(BaseModel):
+    message: str
