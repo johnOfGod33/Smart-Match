@@ -1,6 +1,9 @@
-from fastapi import APIRouter, HTTPException, Response
+from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException, Security
 from fastapi.responses import JSONResponse
 
+from ..auth.utils import get_current_user
 from ..schemas import Message
 from ..utils import get_embeddings_data
 from . import utils
@@ -10,6 +13,7 @@ router = APIRouter(
     prefix="/job_seekers",
     tags=["Job Seekers"],
     responses={
+        200: {"descripiton": "Job Seeker profile"},
         201: {"description": "Job Seeker Registered"},
         401: {"description": "Unauthorized"},
         404: {"description": "Job Seeker not found"},
@@ -41,3 +45,8 @@ async def register(job_seeker: Job_seeker):
         raise err
     except Exception as err:
         raise HTTPException(status_code=500, detail=f"some error occured {err}")
+
+
+@router.get("/me/", status_code=200, response_model=Job_seeker)
+async def get_me(user: Annotated[Job_seeker, Security(get_current_user)]):
+    return user
