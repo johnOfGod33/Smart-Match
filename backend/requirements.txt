@@ -1,7 +1,12 @@
 fastapi[standard]
 pyjwt
-passlib[bcrypt]
 beanie
 pymongo
 pydantic-settings
 sentence-transformers
+pytest
+httpx
+twisted
+passlib[bcrypt]
+asgi-lifespan
+pytest-asyncio

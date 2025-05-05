@@ -71,5 +71,7 @@ async def get_current_user(
             raise credentials_exception
 
         return user
+    except HTTPException as err:
+        raise err
     except InvalidTokenError:
         raise credentials_exception

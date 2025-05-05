@@ -35,4 +35,6 @@ async def login(job_seeker: Job_seeker_in) -> Token:
 
         return Token(access_token=access_token, token_type="bearer")
     except Exception as err:
+        raise err
+    except Exception as err:
         raise HTTPException(status_code=500, detail=f"somme error ocurred {err}")
