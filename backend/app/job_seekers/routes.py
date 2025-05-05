@@ -8,6 +8,7 @@ from ..schemas import Message
 from ..utils import get_embeddings_data
 from . import utils
 from .models import Job_seeker
+from .schemas import Job_seeker_profile
 
 router = APIRouter(
     prefix="/job_seekers",
@@ -16,7 +17,7 @@ router = APIRouter(
         200: {"descripiton": "Job Seeker profile"},
         201: {"description": "Job Seeker Registered"},
         401: {"description": "Unauthorized"},
-        404: {"description": "Job Seeker not found"},
+        400: {"description": "Bad request Job Seeker not found"},
         500: {"description": "Internal Server Error"},
     },
 )
@@ -30,7 +31,7 @@ async def register(job_seeker: Job_seeker):
         )
 
         if job_seeker_exists:
-            raise HTTPException(status_code=404, detail="Job Seeker already exists")
+            raise HTTPException(status_code=400, detail="Job Seeker already exists")
 
         job_seeker.password = utils.hash_password(job_seeker.password)
         text = utils.prepare_data_for_embedding(job_seeker)
@@ -47,6 +48,8 @@ async def register(job_seeker: Job_seeker):
         raise HTTPException(status_code=500, detail=f"some error occured {err}")
 
 
-@router.get("/me/", status_code=200, response_model=Job_seeker)
-async def get_me(user: Annotated[Job_seeker, Security(get_current_user)]):
+@router.get("/me/", status_code=200, response_model=Job_seeker_profile)
+async def get_me(
+    user: Annotated[Job_seeker, Security(get_current_user)]
+) -> Job_seeker_profile:
     return user

@@ -21,3 +21,15 @@ class Job_seeker_base(Job_seeker_in):
     skills: List[str]
     type_offer_seeker: Job_offer_type
     years_of_experience: int
+
+
+class Job_seeker_profile(BaseModel):
+    """schema use for get me"""
+
+    email: EmailStr
+    first_name: str
+    last_name: str
+    domain: str
+    skills: List[str]
+    type_offer_seeker: Job_offer_type
+    years_of_experience: int

@@ -11,6 +11,8 @@ Deux reponse possnible :
 """
 
 import pytest
+from app.auth.utils import get_current_user, oauth2_scheme
+from app.job_seekers.models import Job_seeker
 from fastapi import HTTPException
 from httpx import AsyncClient
 from starlette.exceptions import HTTPException
@@ -28,6 +30,15 @@ async def test_login(client: AsyncClient, create_job_seeker):
     assert response.status_code == 200
     assert response.json().get("access_token") is not None
     assert response.json().get("token_type") == "bearer"
+
+    access_token = response.json().get("access_token")
+
+    response = await client.get(
+        "/job_seekers/me/", headers={"Authorization": f"Bearer {access_token}"}
+    )
+
+    assert response.status_code == 200
+    assert response.json().get("email") == "mytester@example.com"
 
 
 @pytest.mark.asyncio

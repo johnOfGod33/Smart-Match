@@ -47,7 +47,7 @@ async def test_resgister_fail_duplicate_email(client: AsyncClient, setup_databas
     assert response.status_code == 201
 
     response = await client.post("/job_seekers/register", json=user_data)
-    assert response.status_code == 404
+    assert response.status_code == 400
     assert response.json() == {"detail": "Job Seeker already exists"}
 
 
@@ -56,3 +56,13 @@ async def test_resgister_fail_bad_body(client: AsyncClient, setup_database):
     user_data = {}
     response = await client.post("/job_seekers/register", json=user_data)
     assert response.status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_get_me_fail_bad_token(client: AsyncClient, setup_database):
+    response = await client.get(
+        "/job_seekers/me/", headers={"Authorization": "Bearer eyfdqf"}
+    )
+
+    assert response.status_code == 401
+    assert response.json() == {"detail": "Could not validate credentials"}

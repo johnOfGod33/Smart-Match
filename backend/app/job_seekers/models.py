@@ -1,7 +1,7 @@
 from typing import Annotated, List
 
 from beanie import Document, Indexed
-from pydantic import ConfigDict, EmailStr
+from pydantic import ConfigDict, EmailStr, Field
 
 from .schemas import Job_seeker_base
 
@@ -9,7 +9,7 @@ from .schemas import Job_seeker_base
 class Job_seeker(Job_seeker_base, Document):
     """model use for db storage"""
 
-    email: Annotated[EmailStr, Indexed(unique=True)]
+    email: EmailStr = Field(description="email of the user")
     seeker_embeddings: List[float] = []
 
     model_config = {
@@ -26,3 +26,6 @@ class Job_seeker(Job_seeker_base, Document):
             }
         }
     }
+
+    class Settings:
+        name = "job_seekers"
